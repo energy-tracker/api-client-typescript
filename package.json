@@ -1,0 +1,74 @@
+{
+  "name": "@energy-tracker/api-client",
+  "version": "1.0.0",
+  "description": "Typed async client for the Energy Tracker public API",
+  "license": "MIT",
+  "author": "Stefan Nebel",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/energy-tracker/api-client-typescript.git"
+  },
+  "homepage": "https://github.com/energy-tracker/api-client-typescript#readme",
+  "bugs": {
+    "url": "https://github.com/energy-tracker/api-client-typescript/issues"
+  },
+  "keywords": [
+    "energy-tracker",
+    "api",
+    "client",
+    "iobroker",
+    "typescript"
+  ],
+  "type": "commonjs",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "test:contracts": "npm run build && node --test tests/contracts.test.mjs",
+    "coverage": "npm run build && c8 --all --include 'dist/cjs/**/*.js' --reporter=text --reporter=lcov node --test tests/*.test.mjs",
+    "check:package": "npm run build && node scripts/check-package.mjs",
+    "check:release": "node scripts/check-release.mjs",
+    "check": "npm run lint && npm run typecheck && npm run coverage && npm run check:package",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "c8": "^12.0.0",
+    "prettier": "^3.9.9",
+    "semver": "^7.8.5",
+    "typescript": "^7.0.2",
+    "typescript-compat": "npm:typescript@~5.8.3"
+  }
+}

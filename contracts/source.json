@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/energy-tracker/api-client-python",
+  "commit": "2515b00b00bdc61b487ef0c191c13646a6cc91d1",
+  "sha256": {
+    "README.md": "a88ee2b3e2e64d811a964cdc4a42fb2b7741b10d6d0037be1f60c23ed0a066cd",
+    "cases/calculations.json": "0065dc017f173c15b21dbc3b40c3e37d1f1ea80b957669ad50df20f9e888efe0",
+    "cases/devices.json": "7324964ac126b43b1d6070cf685ddae4e5659f6edbc8c934af34a796453bf15b",
+    "cases/environments.json": "c069c180405e1414029fe496e46f0272242e6f4d421b1754f16e442307f5cdd8",
+    "cases/errors.json": "8e19323b83432e47d166f1801e4c37f52f21dbe2c8d26b29eb5e8b3e8d458c0d",
+    "cases/meter-readings.json": "45be9712d29bbcc373fe564f9771cbf7532194e5a2c47d38fc1e5bf234d92a36",
+    "schema.json": "e91982f7d62a1bae6d48f5c1614fcf1cda9f3e27c32249aee602c2cfa5c9dc2d"
+  }
+}
