@@ -2,23 +2,24 @@
 
 Package: `@energy-tracker/api-client`. Repository: `energy-tracker/api-client-typescript`.
 
-## One-time setup
+## Publishing authentication
 
-1. Create the public GitHub repository and push this checkout's `main` branch.
-2. Ensure the publishing npm account has access to the `energy-tracker` npm scope.
-   A GitHub organization does not automatically reserve the corresponding npm scope.
-3. For the first tag release, add a temporary GitHub Actions secret `NPM_TOKEN`
-   containing a granular npm token allowed to create/publish the scoped package
-   without interactive 2FA. Push `v1.0.0` on the reviewed `main` commit using the
-   tag commands below. The workflow publishes the package and creates its GitHub release.
-4. After that initial publication, in the npm package's settings add a GitHub Actions trusted publisher:
-   organization `energy-tracker`, repository `api-client-typescript`, workflow
-   `release.yml`, no environment name. Allow direct `npm publish`.
-5. Remove the GitHub `NPM_TOKEN` secret and revoke that bootstrap token. Further
-   releases authenticate through OIDC.
+Releases use npm Trusted Publishing (OIDC). No `NPM_TOKEN` secret is needed.
+The npm package's trusted publisher must match:
+
+- Provider: GitHub Actions
+- Organization: `energy-tracker`
+- Repository: `api-client-typescript`
+- Workflow: `release.yml`
+- Environment: none
+- Allowed action: direct `npm publish`
+
+When setting up a new package, publish its first version using an authenticated
+npm account with 2FA before configuring Trusted Publishing. npm requires the
+package to exist before a trusted publisher can be added.
 
 The [npm trusted publishing documentation](https://docs.npmjs.com/trusted-publishers/)
-describes this configuration. Subsequent releases use OIDC with provenance and
+describes this configuration. Releases use OIDC with provenance and
 need no long-lived npm token in GitHub secrets. The repository must be public for
 public npm provenance. The workflow uses GitHub-hosted Ubuntu 24.04 and Node 24.
 
