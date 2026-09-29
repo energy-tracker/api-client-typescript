@@ -136,3 +136,5 @@ for local or transport failures) and `apiMessage` (the server's message array).
 `TimeoutError` represents a client timeout, `NetworkError` a transport failure.
 Only each endpoint's exact success status is accepted. A caller-triggered abort
 rejects with the original abort reason rather than an SDK error.
+An unreadable HTTP error body keeps its status-specific error class, with the
+body failure in `cause`. Invalid entries in the server's message array are ignored.

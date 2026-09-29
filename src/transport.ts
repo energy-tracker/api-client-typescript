@@ -49,10 +49,17 @@ function messages(data: unknown): string[] {
   if (!data || typeof data !== 'object') return [];
   const value = (data as Record<string, unknown>).message;
   if (typeof value === 'string') return [value];
-  return Array.isArray(value) ? value.map(String) : [];
+  return Array.isArray(value)
+    ? value.filter((item): item is string => typeof item === 'string')
+    : [];
 }
-function httpError(response: Response, data: unknown, expected: number): EnergyTrackerAPIError {
-  const options = { statusCode: response.status, apiMessage: messages(data) };
+function httpError(
+  response: Response,
+  data: unknown,
+  expected: number,
+  cause?: unknown,
+): EnergyTrackerAPIError {
+  const options = { statusCode: response.status, apiMessage: messages(data), cause };
   switch (response.status) {
     case 400:
       return new ValidationError('Bad Request', options);
@@ -142,12 +149,12 @@ export class Transport {
       }
       const response = await this.#fetch(url, init);
       if (response.status !== request.status) {
-        const text = await response.text();
         let data: unknown;
         try {
-          data = JSON.parse(text);
-        } catch {
-          /* HTTP status takes priority over an invalid error body. */
+          data = JSON.parse(await response.text());
+        } catch (cause) {
+          // Keep the known HTTP error when its body is invalid or interrupted.
+          throw httpError(response, undefined, request.status, cause);
         }
         throw httpError(response, data, request.status);
       }
