@@ -43,5 +43,6 @@ npm run check
 local HTTP server. Their pinned source revision and checksums are recorded in
 `contracts/source.json`; no live API or Python installation is needed.
 
-Releases run automatically on matching `v*` tags after all checks pass. See
-[release setup](https://github.com/energy-tracker/api-client-typescript/blob/main/docs/releasing.md) for the one-time npm configuration and commands.
+To release, update the version in `package.json` and `package-lock.json`, merge
+into `main`, then push the matching `v*` tag on the merged commit. GitHub Actions
+publishes to npm through OIDC after all checks pass.
