@@ -1,6 +1,6 @@
 {
   "repository": "https://github.com/energy-tracker/api-client-python",
-  "commit": "54ff998357ffa7c191f4538b5b3c49308b777d49",
+  "commit": "6cf17f0631e3f71038da3ac06ce91e82965e1cf2",
   "sha256": {
     "README.md": "985242aa12e06502b0dcbdf75ec3b95c8fd840dee4a1f309620f1b338e64a59a",
     "cases/calculations.json": "0065dc017f173c15b21dbc3b40c3e37d1f1ea80b957669ad50df20f9e888efe0",

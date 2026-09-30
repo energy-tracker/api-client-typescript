@@ -55,7 +55,7 @@ export interface TimestampDto {
 export interface ExportMeterReadingsDto {
   columns: readonly ExportColumn[];
   includeHeader?: boolean;
-  /** Defaults to semicolon; comma and tab can be selected explicitly. */
+  /** Defaults to semicolon. */
   delimiter?: CsvDelimiter;
   dateFormat?: DateFormat;
 }
