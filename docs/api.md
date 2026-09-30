@@ -62,7 +62,7 @@ const csv = await client.meterReadings.export(
   {
     columns: [ExportColumn.DATE, ExportColumn.VALUE],
     includeHeader: true,
-    delimiter: 'comma', // Also semicolon, tab
+    delimiter: 'semicolon', // Default; also comma, tab
     dateFormat: 'iso', // Also date_time, unix, unix_ms
   },
   { sort: SortDirection.ASC },

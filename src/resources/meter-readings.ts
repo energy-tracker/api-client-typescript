@@ -79,7 +79,7 @@ export class MeterReadingResource {
     const body = {
       columns: [...config.columns],
       includeHeader: config.includeHeader ?? true,
-      delimiter: config.delimiter ?? CsvDelimiter.COMMA,
+      delimiter: config.delimiter ?? CsvDelimiter.SEMICOLON,
       dateFormat: config.dateFormat ?? DateFormat.ISO,
     };
     return this.transport.request(
