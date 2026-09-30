@@ -183,9 +183,9 @@ export class Transport {
         });
       }
     } catch (cause) {
-      if (controller.signal.reason === timeoutError) throw timeoutError;
       if (request.signal?.aborted) throw request.signal.reason;
       if (cause instanceof EnergyTrackerAPIError) throw cause;
+      if (controller.signal.reason === timeoutError) throw timeoutError;
       throw new NetworkError('Request failed', { cause });
     } finally {
       clearTimeout(timer);

@@ -103,19 +103,30 @@ test('network errors retain cause without HTTP status', async () => {
     },
   );
 });
-for (const status of [200, 429, 503]) {
+for (const [status, ErrorType] of [
+  [200, api.TimeoutError],
+  [400, api.ValidationError],
+  [401, api.AuthenticationError],
+  [403, api.ForbiddenError],
+  [404, api.ResourceNotFoundError],
+  [409, api.ConflictError],
+  [429, api.RateLimitError],
+  [500, api.EnergyTrackerAPIError],
+  [503, api.ServiceUnavailableError],
+]) {
   test(`timeout covers streaming HTTP ${status} body and does not retry`, async (t) => {
     let requests = 0;
     const baseUrl = await serve(t, (req, res) => {
       requests++;
-      res.writeHead(status, { 'Content-Type': 'application/json' });
+      res.writeHead(status, { 'Content-Type': 'application/json', 'Retry-After': '42' });
       res.write('[');
     });
     await assert.rejects(
       () => client({ baseUrl, timeout: 0.2 }).devices.listStandard(),
       (error) => {
-        assert.ok(error instanceof api.TimeoutError);
-        assert.equal(error.statusCode, null);
+        assert.equal(error.constructor, ErrorType);
+        assert.equal(error.statusCode, status === 200 ? null : status);
+        if (status === 429) assert.equal(error.retryAfter, 42);
         return true;
       },
     );
