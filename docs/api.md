@@ -69,6 +69,9 @@ const csv = await client.meterReadings.export(
 ); // Same filters as list()
 ```
 
+Since version 2.0.0, CSV exports default to semicolon. To preserve the comma-separated
+output of version 1.x, explicitly set `delimiter: CsvDelimiter.COMMA`.
+
 Reading values must be plain decimal strings, without an exponent. Formatting
 removes redundant zeros without converting to a JavaScript number. Meter precision
 and range checks belong to the server; `allowRounding` is sent only when supplied.
