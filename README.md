@@ -29,6 +29,7 @@ exports return `Uint8Array`. The server handles calendar boundaries and rounding
 | `meterReadings` | `list`, `create`, `delete`, `export`                            |
 | `environments`  | `list`, `get`, `create`, `delete`, `createEntry`, `deleteEntry` |
 | `calculations`  | `dailyValues`, `extrapolations`                                 |
+| `token`         | `status`                                                        |
 
 See [API usage](https://github.com/energy-tracker/api-client-typescript/blob/main/docs/api.md) for options and errors.
 

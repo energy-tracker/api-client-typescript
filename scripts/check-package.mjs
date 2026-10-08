@@ -53,12 +53,13 @@ try {
   const esm = `import { EnergyTrackerClient, ValidationError } from '${pkg.name}'; import { createRequire } from 'node:module'; const cjs = createRequire(import.meta.url)('${pkg.name}'); if (EnergyTrackerClient !== cjs.EnergyTrackerClient || ValidationError !== cjs.ValidationError) throw Error('Module identity mismatch');`;
   await writeFile(join(temp, 'smoke.mjs'), esm);
   execFileSync(process.execPath, [join(temp, 'smoke.mjs')], { cwd: temp, stdio: 'inherit' });
-  const consumer = `import { EnergyTrackerClient, CalculationInterval, type MeterReadingDto } from '${pkg.name}';
+  const consumer = `import { EnergyTrackerClient, CalculationInterval, TokenScope, type MeterReadingDto } from '${pkg.name}';
 const client = new EnergyTrackerClient({accessToken: 'test'});
 const result: Promise<MeterReadingDto[]> = client.meterReadings.list('device');
 void result;
 void client.meterReadings.create('device', {value: '9999999999.999999', timestamp: new Date()});
 void client.calculations.extrapolations('device', {interval: CalculationInterval.MONTH});
+void client.token.status().then((status) => status.scopes.includes(TokenScope.WRITE_METER_READING) || status.scopes.includes('read:future-resource'));
 // @ts-expect-error Meter values must not lose precision through a number.
 void client.meterReadings.create('device', {value: 123.45});
 // @ts-expect-error Unsupported intervals must be rejected by the type system.

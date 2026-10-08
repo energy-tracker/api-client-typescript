@@ -330,6 +330,16 @@ test('meter-reading response must preserve a decimal string', async (t) => {
     api.EnergyTrackerAPIError,
   );
 });
+for (const scopes of ['write:meter-reading', ['write:meter-reading', 1], undefined]) {
+  test(`token status rejects scopes ${JSON.stringify(scopes)}`, async (t) => {
+    const baseUrl = await serve(t, (req, res) =>
+      res
+        .writeHead(200, { 'Content-Type': 'application/json' })
+        .end(JSON.stringify({ displayName: 'Token', scopes, expiresAt: null })),
+    );
+    await assert.rejects(() => client({ baseUrl }).token.status(), api.EnergyTrackerAPIError);
+  });
+}
 test('CSV error responses still expose API messages', async (t) => {
   const baseUrl = await serve(t, (req, res) =>
     res
