@@ -27,6 +27,23 @@ export const CalculationInterval = {
 export type CalculationInterval = (typeof CalculationInterval)[keyof typeof CalculationInterval];
 export const ExtrapolationMethod = { STANDARD: 'standard' } as const;
 export type ExtrapolationMethod = (typeof ExtrapolationMethod)[keyof typeof ExtrapolationMethod];
+export const TokenScope = {
+  READ_DAILY_VALUES: 'read:daily-values',
+  READ_EXTRAPOLATION: 'read:extrapolation',
+  METER_READING: 'meter-reading',
+  READ_METER_READING: 'read:meter-reading',
+  WRITE_METER_READING: 'write:meter-reading',
+  DELETE_METER_READING: 'delete:meter-reading',
+  MEASURING_DEVICE: 'measuring-device',
+  READ_MEASURING_DEVICE: 'read:measuring-device',
+  WRITE_MEASURING_DEVICE: 'write:measuring-device',
+  DELETE_MEASURING_DEVICE: 'delete:measuring-device',
+  ENVIRONMENT_RECORD: 'environment-record',
+  READ_ENVIRONMENT_RECORD: 'read:environment-record',
+  WRITE_ENVIRONMENT_RECORD: 'write:environment-record',
+  DELETE_ENVIRONMENT_RECORD: 'delete:environment-record',
+} as const;
+export type TokenScope = (typeof TokenScope)[keyof typeof TokenScope];
 
 export interface DeviceSummaryDto {
   readonly id: string;
@@ -85,6 +102,12 @@ export interface CalculationPointDto {
   /** Estimated interval total; do not add actualValue. */
   readonly expectedValue: number;
   readonly expectedDuration: number;
+}
+export interface TokenStatusDto {
+  readonly displayName: string;
+  /** A scope added by a newer API is kept as a plain string. */
+  readonly scopes: readonly (TokenScope | (string & {}))[];
+  readonly expiresAt: Date | null;
 }
 
 export interface RequestOptions {

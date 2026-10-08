@@ -23,6 +23,7 @@ const dates = new Set([
   'timestamp',
   'date',
   'lastUpdatedAt',
+  'expiresAt',
   'from',
   'to',
   'updatedAfter',
@@ -71,6 +72,7 @@ const operations = {
   'calculations.dailyValues': (c, { deviceId, ...i }) => c.calculations.dailyValues(deviceId, i),
   'calculations.extrapolations': (c, { deviceId, ...i }) =>
     c.calculations.extrapolations(deviceId, i),
+  'token.status': (c) => c.token.status(),
 };
 const errors = {
   validation: api.ValidationError,

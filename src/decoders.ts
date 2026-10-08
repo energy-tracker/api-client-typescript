@@ -3,6 +3,7 @@ import type {
   DeviceSummaryDto,
   EnvironmentRecordDto,
   MeterReadingDto,
+  TokenStatusDto,
 } from './models.js';
 
 function object(value: unknown): Record<string, unknown> {
@@ -83,5 +84,13 @@ export function calculation(value: unknown): CalculationPointDto {
     actualDuration: number(data.actualDuration, true),
     expectedValue: number(data.expectedValue),
     expectedDuration: number(data.expectedDuration, true),
+  };
+}
+export function tokenStatus(value: unknown): TokenStatusDto {
+  const data = object(value);
+  return {
+    displayName: string(data.displayName),
+    scopes: list(string)(data.scopes),
+    expiresAt: data.expiresAt == null ? null : date(data.expiresAt),
   };
 }
