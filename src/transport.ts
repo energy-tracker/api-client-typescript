@@ -102,7 +102,7 @@ export class Transport {
     this.#calculationTimeout = timeout(options.calculationTimeout ?? 60);
     let url: URL;
     try {
-      url = new URL(options.baseUrl ?? 'https://public-api.energy-tracker.best-ios-apps.de');
+      url = new URL(options.baseUrl ?? 'https://public-api.energy-tracker.app');
     } catch (cause) {
       throw new ValidationError('Base URL must be a valid HTTP(S) URL', { cause });
     }
