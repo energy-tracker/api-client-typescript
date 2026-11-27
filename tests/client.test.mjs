@@ -28,6 +28,16 @@ for (const url of [
   test(`reject unsafe base URL ${url}`, () =>
     assert.throws(() => client({ baseUrl: url }), api.ValidationError));
 }
+test('default base URL is the public API host', async () => {
+  let actual;
+  await client({
+    fetch: async (url) => {
+      actual = url;
+      return new Response(null, { status: 204 });
+    },
+  }).meterReadings.create('device', { value: '1' });
+  assert.equal(actual.origin, 'https://public-api.energy-tracker.app');
+});
 for (const value of [123.45, NaN, Infinity, 'NaN', 'Infinity', '', '1e3']) {
   test(`reject lossy or invalid decimal input ${String(value)}`, async () => {
     let requests = 0;
